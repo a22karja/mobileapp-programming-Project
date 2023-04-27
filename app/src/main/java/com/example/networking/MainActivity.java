@@ -8,19 +8,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
-    private final String JSON_URL = "HTTPS_URL_TO_JSON_DATA_CHANGE_THIS_URL";
+    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
     private final String JSON_FILE = "mountains.json";
-    public ArrayList<Mountain> Mountains = new ArrayList<>(Arrays.asList(
-            new Mountain("Matterhorn"),
-            new Mountain("Mont Blanc"),
-            new Mountain("Denali")
-    ));
+    public ArrayList<Mountain> Mountains;
+
 
 
     @Override
@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             }
         });
 
+
+
+        //Creates view
         RecyclerView view = findViewById(R.id.view);
         view.setLayoutManager(new LinearLayoutManager(this));
         view.setAdapter(adapter);
@@ -44,6 +47,15 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     @Override
     public void onPostExecute(String json) {
         Log.d("MainActivity", json);
+
+        // Create GSON object to perform marshall/unmarshall operations
+        Gson gson = new Gson();
+
+        // Unmarshall JSON -> list of objects
+        Type type = new TypeToken<ArrayList<Mountain>>() {}.getType();
+        ArrayList<Mountain> listOfMountains = gson.fromJson(json, type);
+        Mountains=gson.fromJson(json, type);
+        Log.d("BACONSODA", listOfMountains.get(0).getName());
     }
 
 }
