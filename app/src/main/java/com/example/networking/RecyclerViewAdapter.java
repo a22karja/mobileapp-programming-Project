@@ -9,15 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<Mountain> Mountains;
+    private ArrayList<Mountain> Mountains;
     private LayoutInflater layoutInflater;
     private OnClickListener onClickListener;
 
-    RecyclerViewAdapter(Context context, List<Mountain> Mountains, OnClickListener onClickListener) {
+    RecyclerViewAdapter(Context context, ArrayList<Mountain> Mountains, OnClickListener onClickListener) {
         this.layoutInflater = LayoutInflater.from(context);
         this.Mountains = Mountains;
         this.onClickListener = onClickListener;

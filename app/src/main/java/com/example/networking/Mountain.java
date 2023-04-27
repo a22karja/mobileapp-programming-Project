@@ -12,6 +12,9 @@ public class Mountain {
     private String category;
     private int size;
     private int cost;
+    //auxdata
+    //private String wiki;
+    //private String img;
 
     public Mountain(String ID, String name, String type, String company, String location, String category, int size, int cost) {
         this.ID = ID;
@@ -88,5 +91,19 @@ public class Mountain {
 
     public int getCost() {
         return cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Mountain{" +
+                "ID='" + ID + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", company='" + company + '\'' +
+                ", location='" + location + '\'' +
+                ", category='" + category + '\'' +
+                ", size=" + size +
+                ", cost=" + cost +
+                '}';
     }
 }

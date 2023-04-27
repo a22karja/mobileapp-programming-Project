@@ -19,24 +19,22 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
     private final String JSON_FILE = "mountains.json";
-    public ArrayList<Mountain> Mountains;
+    public ArrayList<Mountain> Mountains =new ArrayList<Mountain>();//arraylist that holds information
 
-
+    RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        new JsonFile(this, this).execute(JSON_FILE);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, Mountains, new RecyclerViewAdapter.OnClickListener() {
+        //new JsonFile(this, this).execute(JSON_FILE);
+        new JsonTask(this).execute(JSON_URL);
+        adapter = new RecyclerViewAdapter(this, Mountains, new RecyclerViewAdapter.OnClickListener() {
             @Override
             public void onClick(Mountain item) {
                 Toast.makeText(MainActivity.this, item.getName(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
         //Creates view
         RecyclerView view = findViewById(R.id.view);
@@ -46,16 +44,17 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     @Override
     public void onPostExecute(String json) {
-        Log.d("MainActivity", json);
 
-        // Create GSON object to perform marshall/unmarshall operations
+
+// Create GSON object to perform marshall/unmarshall operations
         Gson gson = new Gson();
 
-        // Unmarshall JSON -> list of objects
+
         Type type = new TypeToken<ArrayList<Mountain>>() {}.getType();
-        ArrayList<Mountain> listOfMountains = gson.fromJson(json, type);
+
         Mountains=gson.fromJson(json, type);
-        Log.d("BACONSODA", listOfMountains.get(0).getName());
+        Log.d("MainActivityB", Mountains.toString());
+        adapter.notifyDataSetChanged();
     }
 
 }
