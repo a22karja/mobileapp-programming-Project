@@ -13,13 +13,13 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<item> items;
+    private List<Mountain> Mountains;
     private LayoutInflater layoutInflater;
     private OnClickListener onClickListener;
 
-    RecyclerViewAdapter(Context context, List<item> items, OnClickListener onClickListener) {
+    RecyclerViewAdapter(Context context, List<Mountain> Mountains, OnClickListener onClickListener) {
         this.layoutInflater = LayoutInflater.from(context);
-        this.items = items;
+        this.Mountains = Mountains;
         this.onClickListener = onClickListener;
     }
 
@@ -31,12 +31,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(items.get(position).getTitle());
+        holder.title.setText(Mountains.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return Mountains.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -50,11 +50,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         public void onClick(View view) {
-            onClickListener.onClick(items.get(getAdapterPosition()));
+            onClickListener.onClick(Mountains.get(getAdapterPosition()));
         }
     }
 
     public interface OnClickListener {
-        void onClick(item item);
+        void onClick(Mountain Mountain);
     }
 }
