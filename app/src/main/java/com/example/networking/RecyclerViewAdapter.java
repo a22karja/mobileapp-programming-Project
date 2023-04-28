@@ -58,4 +58,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public interface OnClickListener {
         void onClick(Mountain Mountain);
     }
+
+    public void newData(ArrayList<Mountain> Mountains)
+    {
+        this.Mountains=Mountains;
+    }
 }
