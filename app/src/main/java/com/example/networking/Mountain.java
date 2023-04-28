@@ -12,9 +12,6 @@ public class Mountain {
     private String category;
     private int size;
     private int cost;
-    //auxdata
-    //private String wiki;
-    //private String img;
 
     public Mountain(String ID, String name, String type, String company, String location, String category, int size, int cost) {
         this.ID = ID;
@@ -26,6 +23,8 @@ public class Mountain {
         this.size = size;
         this.cost = cost;
     }
+
+    //Nedan för är auto genererade getters och setters samt en constructor för Mountain
     public Mountain(String name) {
         this.name = name;
     }
@@ -92,6 +91,7 @@ public class Mountain {
     public int getCost() {
         return cost;
     }
+
 
     @Override
     public String toString() {

@@ -18,18 +18,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private LayoutInflater layoutInflater;
     private OnClickListener onClickListener;
 
+    //Constructor
     RecyclerViewAdapter(Context context, ArrayList<Mountain> Mountains, OnClickListener onClickListener) {
         this.layoutInflater = LayoutInflater.from(context);
         this.Mountains = Mountains;
         this.onClickListener = onClickListener;
     }
 
+    //Fills information into layout from item.xml
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(layoutInflater.inflate(R.layout.item, parent, false));
     }
 
+    //sets the text in title
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(Mountains.get(position).getName());
@@ -39,6 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return Mountains.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView title;

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
-    private final String JSON_FILE = "mountains.json";
     public ArrayList<Mountain> Mountains =new ArrayList<Mountain>();//arraylist that holds information
 
     RecyclerViewAdapter adapter;
@@ -27,8 +26,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //new JsonFile(this, this).execute(JSON_FILE);
+
+        //fetches json data from JSON_URL
         new JsonTask(this).execute(JSON_URL);
+        //Initialize adapter so that it isnt null and is connectet to the ArrayList Mountains
         adapter = new RecyclerViewAdapter(this, Mountains, new RecyclerViewAdapter.OnClickListener() {
             @Override
             public void onClick(Mountain item) {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             }
         });
 
-        //Creates view
+        //Sets the recyclerView with ID view so it is connectet to adapter
         RecyclerView view = findViewById(R.id.view);
         view.setLayoutManager(new LinearLayoutManager(this));
         view.setAdapter(adapter);
@@ -45,15 +46,12 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     @Override
     public void onPostExecute(String json) {
 
-
-// Create GSON object to perform marshall/unmarshall operations
         Gson gson = new Gson();
-
-
         Type type = new TypeToken<ArrayList<Mountain>>() {}.getType();
-
+        //Fetches the data in the string json so that it can be put into the ArrayList Mountains
         Mountains=gson.fromJson(json, type);
         Log.d("MainActivityB", Mountains.toString());
+        //Updates the adapter data
         adapter.newData(Mountains);
         adapter.notifyDataSetChanged();
     }
