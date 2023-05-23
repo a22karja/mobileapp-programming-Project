@@ -19,7 +19,6 @@ public class MoreInformation extends AppCompatActivity {
 
     Date c = Calendar.getInstance().getTime();
     Date latestWater;
-    Date today;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     @Override
     protected void onCreate(Bundle savedInstanceState) {

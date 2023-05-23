@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         view.setAdapter(adapter);
     }
 
+
+
     @Override
     public void onPostExecute(String json) {
 
@@ -125,6 +127,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
                         myPreferenceEditor.putString("MyAppPreferenceArray",Pson);
                         myPreferenceEditor.apply();
 
+                        RecyclerView view = findViewById(R.id.view);
+                        view.setLayoutManager(new LinearLayoutManager(this));
+                        view.setAdapter(adapter);
+
                         break;
                     }
                 }
@@ -135,6 +141,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             {
                 myPreferenceEditor.clear();
                 myPreferenceEditor.apply();
+                finish();
+                startActivity(getIntent());
             }
         }
     }
