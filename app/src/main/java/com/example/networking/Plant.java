@@ -1,22 +1,34 @@
 package com.example.networking;
 
 @SuppressWarnings("WeakerAccess")
-public class Mountain {
+public class Plant {
+
 
 
     private String ID;
-    private String name;
-    private String type;
-    private String company;
-    private String location;
-    private String category;
-    private int size;
-    private int cost;
+    //JUst an ID
 
-    public Mountain(String ID, String name, String type, String company, String location, String category, int size, int cost) {
+    private String name;
+    //Name of Plant
+
+    private String company;
+    //When it was waterd last
+
+    private String location;
+    //Where the plant is
+
+    private String category;
+    //What the plant gives
+
+    private int size;
+    //Empty
+
+    private int cost;
+    //How often in days it should be watered
+
+    public Plant(String ID, String name, String type, String company, String location, String category, int size, int cost) {
         this.ID = ID;
         this.name = name;
-        this.type = type;
         this.company = company;
         this.location = location;
         this.category = category;
@@ -25,7 +37,7 @@ public class Mountain {
     }
 
     //Nedan för är auto genererade getters och setters samt en constructor för Mountain
-    public Mountain(String name) {
+    public Plant(String name) {
         this.name = name;
     }
 
@@ -35,10 +47,6 @@ public class Mountain {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public void setCompany(String company) {
@@ -68,10 +76,6 @@ public class Mountain {
         return name;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public String getCompany() {
         return company;
     }
@@ -98,7 +102,6 @@ public class Mountain {
         return "Mountain{" +
                 "ID='" + ID + '\'' +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
                 ", company='" + company + '\'' +
                 ", location='" + location + '\'' +
                 ", category='" + category + '\'' +

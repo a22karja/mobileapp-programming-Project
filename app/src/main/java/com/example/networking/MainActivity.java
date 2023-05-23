@@ -22,7 +22,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=a22karja";
-    public ArrayList<Mountain> Mountains =new ArrayList<Mountain>();//arraylist that holds information
+    public ArrayList<Plant> Plants =new ArrayList<Plant>();//arraylist that holds information
 
     RecyclerViewAdapter adapter;
 
@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         Time=simpleDateFormat.format(calender.getTime());
 
         //Initialize adapter so that it isnt null and is connectet to the ArrayList Mountains
-        adapter = new RecyclerViewAdapter(this, Mountains, new RecyclerViewAdapter.OnClickListener() {
+        adapter = new RecyclerViewAdapter(this, Plants, new RecyclerViewAdapter.OnClickListener() {
             @Override
-            public void onClick(Mountain item) {
+            public void onClick(Plant item) {
                 Toast.makeText(MainActivity.this, Time, Toast.LENGTH_SHORT).show();
             }
         });
@@ -65,18 +65,20 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         RecyclerView view = findViewById(R.id.view);
         view.setLayoutManager(new LinearLayoutManager(this));
         view.setAdapter(adapter);
+
+        //Toast.makeText(MainActivity.this, String.valueOf(adapter.getItemCount()), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onPostExecute(String json) {
 
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Mountain>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Plant>>() {}.getType();
         //Fetches the data in the string json so that it can be put into the ArrayList Mountains
-        Mountains=gson.fromJson(json, type);
-        Log.d("MainActivityB", Mountains.toString());
+        Plants=gson.fromJson(json, type);
+        Log.d("MainActivityB", Plants.toString());
         //Updates the adapter data
-        adapter.newData(Mountains);
+        adapter.newData(Plants);
         adapter.notifyDataSetChanged();
     }
 

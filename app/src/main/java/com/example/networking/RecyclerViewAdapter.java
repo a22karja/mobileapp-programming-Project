@@ -10,16 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Mountain> Mountains;
+    private ArrayList<Plant> Mountains;
     private LayoutInflater layoutInflater;
     private OnClickListener onClickListener;
 
     //Constructor
-    RecyclerViewAdapter(Context context, ArrayList<Mountain> Mountains, OnClickListener onClickListener) {
+    RecyclerViewAdapter(Context context, ArrayList<Plant> Mountains, OnClickListener onClickListener) {
         this.layoutInflater = LayoutInflater.from(context);
         this.Mountains = Mountains;
         this.onClickListener = onClickListener;
@@ -60,10 +59,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public interface OnClickListener {
-        void onClick(Mountain Mountain);
+        void onClick(Plant Mountain);
     }
 
-    public void newData(ArrayList<Mountain> Mountains)
+    public void newData(ArrayList<Plant> Mountains)
     {
         this.Mountains=Mountains;
     }
