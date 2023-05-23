@@ -77,4 +77,10 @@ public class MoreInformation extends AppCompatActivity {
         setResult(RESULT_OK, i);
         finish();
     }
+    public void goBack(View v)
+    {
+        Intent i = new Intent(MoreInformation.this,MainActivity.class);
+        setResult(RESULT_CANCELED, i);
+        finish();
+    }
 }

@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         myPreferenceRef = getPreferences(MODE_PRIVATE);
         myPreferenceEditor = myPreferenceRef.edit();
         if(Plants.size()==0){
-            if(myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.").equals("No preference found."))
+            if(myPreferenceRef.getString("MyAppPreferenceArrays", "No preference found.").equals("No preference found."))
             {
                 new JsonTask(this).execute(JSON_URL);
                 Log.d("Get Data From","JSON");
