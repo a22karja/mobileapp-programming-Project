@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         Bundle extras = getIntent().getExtras();
         if(requestCode==1)
