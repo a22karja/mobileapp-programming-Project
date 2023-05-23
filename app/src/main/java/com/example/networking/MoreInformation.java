@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -59,10 +58,10 @@ public class MoreInformation extends AppCompatActivity {
             }
 
             Name.setText(plant.getName());
-            Company.setText(plant.getCompany());
-            Location.setText(plant.getLocation());
-            Category.setText(plant.getCategory());
-            Cost.setText(String.valueOf(plant.getCost()));
+            Company.setText("Last time waterd:\n"+plant.getCompany());
+            Location.setText("Location:\n"+plant.getLocation());
+            Category.setText("Result:\n"+plant.getCategory());
+            Cost.setText("Days Between water:\n"+String.valueOf(plant.getCost()));
 
 
 

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             if(myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.").equals("No preference found."))
             {
                 new JsonTask(this).execute(JSON_URL);
-                Log.d("Get Data From","JSON");
             }
             else
             {
@@ -61,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
                 String json=myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.");
                 Type type=new TypeToken<ArrayList<Plant>>(){}.getType();
                 Plants=gson.fromJson(json,type);
-                Log.d("Get Data From",Plants.toString());
-                Log.d("Get Data From","Shared");
             }
         }
 
@@ -73,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         adapter = new RecyclerViewAdapter(this, Plants, new RecyclerViewAdapter.OnClickListener() {
             @Override
             public void onClick(Plant item) {
-                Toast.makeText(MainActivity.this, item.getID(), Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(MainActivity.this, MoreInformation.class);
                 i.putExtra("KEY_NAME", item);
@@ -118,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             {
                 String plantID=data.getStringExtra("KEY_NAME2");
                 for (Plant p : Plants) {
-                    //Log.d("data to home", plantID);
                     if (p.getID().equals(plantID)) {
                         calender = Calendar.getInstance();
                         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -139,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         else if (requestCode==2) {
             if(resultCode==RESULT_OK)
             {
-                Log.d("WE RAN", "WE RAN");
                 myPreferenceEditor.clear();
                 myPreferenceEditor.apply();
             }
