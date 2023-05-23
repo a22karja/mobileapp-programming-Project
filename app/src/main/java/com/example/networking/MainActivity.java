@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.FileOutputStream;
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     RecyclerViewAdapter adapter;
 
     Calendar calender;
-    SimpleDateFormat simpleDateFormat;
+    SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd-MM-yyyy");
     String Time;
 
     private SharedPreferences myPreferenceRef;
@@ -42,24 +43,31 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+
         myPreferenceRef = getPreferences(MODE_PRIVATE);
         myPreferenceEditor = myPreferenceRef.edit();
-        if(myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.").equals("No preference found."))
-        {
-            new JsonTask(this).execute(JSON_URL);
+        if(Plants.size()==0){
+            if(myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.").equals("No preference found."))
+            {
+                new JsonTask(this).execute(JSON_URL);
+                Log.d("Get Data From","JSON");
+            }
+            else
+            {
+                Gson gson=new Gson();
+                String json=myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.");
+                Type type=new TypeToken<ArrayList<Plant>>(){}.getType();
+                Plants=gson.fromJson(json,type);
+                Log.d("Get Data From",Plants.toString());
+                Log.d("Get Data From","Shared");
+            }
         }
-        else
-        {
-
-        }
 
 
-        //fetches json data from JSON_URL
-        new JsonTask(this).execute(JSON_URL);
 
-        calender=Calendar.getInstance();
-        simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
-        Time=simpleDateFormat.format(calender.getTime());
 
         //Initialize adapter so that it isnt null and is connectet to the ArrayList Plants
         adapter = new RecyclerViewAdapter(this, Plants, new RecyclerViewAdapter.OnClickListener() {
@@ -69,9 +77,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
                 Intent i = new Intent(MainActivity.this, MoreInformation.class);
                 i.putExtra("KEY_NAME", item);
-                startActivity(i);
+                startActivityForResult(i,1);
 
-                Log.d("BACON",item.toString());
             }
         });
 
@@ -80,8 +87,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         RecyclerView view = findViewById(R.id.view);
         view.setLayoutManager(new LinearLayoutManager(this));
         view.setAdapter(adapter);
-        //Toast.makeText(MainActivity.this, Time, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(MainActivity.this, String.valueOf(adapter.getItemCount()), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         Type type = new TypeToken<ArrayList<Plant>>() {}.getType();
         //Fetches the data in the string json so that it can be put into the ArrayList Plants
         Plants=gson.fromJson(json, type);
-        Log.d("MainActivityB", Plants.toString());
+
         //Updates the adapter data
         adapter.newData(Plants);
         adapter.notifyDataSetChanged();
@@ -102,5 +107,39 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         Intent intent = new Intent(MainActivity.this,ABOUT.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle extras = getIntent().getExtras();
+        if(requestCode==1)
+        {
+            if(resultCode==RESULT_OK)
+            {
+                String plantID=data.getStringExtra("KEY_NAME2");
+                for (Plant p : Plants) {
+                    //Log.d("data to home", plantID);
+                    if (p.getID().equals(plantID)) {
+                        calender = Calendar.getInstance();
+                        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        Time = simpleDateFormat.format(calender.getTime());
+                        p.setCompany(Time);
+
+                        myPreferenceEditor.clear();
+                        Gson gson=new Gson();
+                        String Pson=gson.toJson(Plants);
+                        myPreferenceEditor.putString("MyAppPreferenceArray",Pson);
+                        myPreferenceEditor.apply();
+                        Log.d("data to home", Plants.toString());
+                        Log.d("data to home", "DONE");
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
+
 
 }

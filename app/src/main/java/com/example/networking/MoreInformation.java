@@ -2,8 +2,10 @@ package com.example.networking;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -13,23 +15,24 @@ import java.util.Date;
 
 public class MoreInformation extends AppCompatActivity {
 
+    Plant plant;
+
+
+    Date c = Calendar.getInstance().getTime();
+    Date latestWater;
+    Date today;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_information);
 
-        Plant plant;
         TextView Name=findViewById(R.id.name);
         TextView Company=findViewById(R.id.Company);
         TextView Location=findViewById(R.id.location);
         TextView Category=findViewById(R.id.Category);
         TextView Cost=findViewById(R.id.Cost);
         TextView MSG=findViewById(R.id.MSG);
-
-        Date c = Calendar.getInstance().getTime();
-        Date latestWater;
-        Date today;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -65,5 +68,13 @@ public class MoreInformation extends AppCompatActivity {
 
             //The key argument here must match that used in the other activity
         }
+
+    }
+    public void goWaterBack(View v)
+    {
+        Intent i = new Intent(MoreInformation.this,MainActivity.class);
+        i.putExtra("KEY_NAME2", plant.getID());
+        setResult(RESULT_OK, i);
+        finish();
     }
 }

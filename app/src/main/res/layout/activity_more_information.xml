@@ -76,4 +76,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Cost"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="waterd plant"
+        android:onClick="goWaterBack"
+        android:layout_marginTop="50dp"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="368dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MSG"/>
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GO BACK"
+        android:onClick="goBack"
+        android:layout_marginTop="50dp"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="368dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
