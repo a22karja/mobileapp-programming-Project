@@ -1,6 +1,8 @@
 package com.example.networking;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,28 +14,50 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
-    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
+    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=a22karja";
     public ArrayList<Mountain> Mountains =new ArrayList<Mountain>();//arraylist that holds information
 
     RecyclerViewAdapter adapter;
+
+    Calendar calender;
+    SimpleDateFormat simpleDateFormat;
+    String Time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.getBoolean("firstTime", false)) {
+            // <---- run your one time code here
+            //databaseSetup();
+
+            // mark first time has ran.
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstTime", true);
+            editor.commit();
+        }
+
         //fetches json data from JSON_URL
         new JsonTask(this).execute(JSON_URL);
+
+        calender=Calendar.getInstance();
+        simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        Time=simpleDateFormat.format(calender.getTime());
+
         //Initialize adapter so that it isnt null and is connectet to the ArrayList Mountains
         adapter = new RecyclerViewAdapter(this, Mountains, new RecyclerViewAdapter.OnClickListener() {
             @Override
             public void onClick(Mountain item) {
-                Toast.makeText(MainActivity.this, item.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, Time, Toast.LENGTH_SHORT).show();
             }
         });
 
