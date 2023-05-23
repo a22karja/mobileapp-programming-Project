@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         myPreferenceRef = getPreferences(MODE_PRIVATE);
         myPreferenceEditor = myPreferenceRef.edit();
         if(Plants.size()==0){
-            if(myPreferenceRef.getString("MyAppPreferenceArrays", "No preference found.").equals("No preference found."))
+            if(myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.").equals("No preference found."))
             {
                 new JsonTask(this).execute(JSON_URL);
                 Log.d("Get Data From","JSON");
@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     public void goAbout(View v)
     {
-        Intent intent = new Intent(MainActivity.this,ABOUT.class);
-        startActivity(intent);
+        Intent i = new Intent(MainActivity.this,ABOUT.class);
+        startActivityForResult(i,2);
     }
 
     @Override
@@ -130,14 +130,20 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
                         String Pson=gson.toJson(Plants);
                         myPreferenceEditor.putString("MyAppPreferenceArray",Pson);
                         myPreferenceEditor.apply();
-                        Log.d("data to home", Plants.toString());
-                        Log.d("data to home", "DONE");
+
                         break;
                     }
                 }
             }
         }
-
+        else if (requestCode==2) {
+            if(resultCode==RESULT_OK)
+            {
+                Log.d("WE RAN", "WE RAN");
+                myPreferenceEditor.clear();
+                myPreferenceEditor.apply();
+            }
+        }
     }
 
 

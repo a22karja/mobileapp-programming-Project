@@ -1,7 +1,9 @@
 package com.example.networking;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,34 @@ public class ABOUT extends AppCompatActivity {
     public void goBack(View v)
     {
         Intent intent = new Intent(ABOUT.this,MainActivity.class);
-        startActivity(intent);
+        finish();
     }
+
+    public void clearShared(View v)
+    {
+        AlertDialog dialog = new AlertDialog.Builder(ABOUT.this)
+                .setTitle("Update data from internet")
+                .setMessage("If you continue the current data on plants in you phone will dissapear and data from the internet will replace it, this will also restart the app. Do you want to do this?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(ABOUT.this,MainActivity.class);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                }
+                )
+                .setNegativeButton("No", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    }
+                ).create();
+        dialog.show();
+    }
+
+
 }
