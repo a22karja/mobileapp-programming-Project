@@ -10,7 +10,6 @@ Den första är MainActivity.java detta är vart appen körs. Där hämtas json 
 Sedan är det Mountain, detta är vad som beskriver objektet som RecyclerViewn håller i
 
 MainActivity oncreate: fetches the data from JSON_URL and connects adapter to recyclerView. onPostExecute: puts data into adapter
-
 ```
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
