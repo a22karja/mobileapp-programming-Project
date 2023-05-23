@@ -13,14 +13,14 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Plant> Mountains;
+    private ArrayList<Plant> Plants;
     private LayoutInflater layoutInflater;
     private OnClickListener onClickListener;
 
     //Constructor
-    RecyclerViewAdapter(Context context, ArrayList<Plant> Mountains, OnClickListener onClickListener) {
+    RecyclerViewAdapter(Context context, ArrayList<Plant> Plants, OnClickListener onClickListener) {
         this.layoutInflater = LayoutInflater.from(context);
-        this.Mountains = Mountains;
+        this.Plants = Plants;
         this.onClickListener = onClickListener;
     }
 
@@ -34,12 +34,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //sets the text in title
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(Mountains.get(position).getName());
+        holder.title.setText(Plants.get(position).getName()+" Location:"+Plants.get(position).getLocation());
     }
 
     @Override
     public int getItemCount() {
-        return Mountains.size();
+        return Plants.size();
     }
 
 
@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         public void onClick(View view) {
-            onClickListener.onClick(Mountains.get(getAdapterPosition()));
+            onClickListener.onClick(Plants.get(getAdapterPosition()));
         }
     }
 
@@ -64,6 +64,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public void newData(ArrayList<Plant> Mountains)
     {
-        this.Mountains=Mountains;
+        this.Plants =Mountains;
     }
 }

@@ -36,7 +36,7 @@ public class Plant {
         this.cost = cost;
     }
 
-    //Nedan för är auto genererade getters och setters samt en constructor för Mountain
+    //Nedan för är auto genererade getters och setters samt en constructor för Plant
     public Plant(String name) {
         this.name = name;
     }
@@ -99,7 +99,7 @@ public class Plant {
 
     @Override
     public String toString() {
-        return "Mountain{" +
+        return "Plant{" +
                 "ID='" + ID + '\'' +
                 ", name='" + name + '\'' +
                 ", company='" + company + '\'' +
