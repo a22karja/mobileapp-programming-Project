@@ -1,7 +1,9 @@
 package com.example.networking;
 
+import java.io.Serializable;
+
 @SuppressWarnings("WeakerAccess")
-public class Plant {
+public class Plant implements Serializable {
 
 
 

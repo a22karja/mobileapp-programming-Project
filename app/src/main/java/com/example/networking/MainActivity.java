@@ -1,5 +1,6 @@
 package com.example.networking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.FileOutputStream;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,39 +34,47 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     SimpleDateFormat simpleDateFormat;
     String Time;
 
+    private SharedPreferences myPreferenceRef;
+    private SharedPreferences.Editor myPreferenceEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (!prefs.getBoolean("firstTime", false)) {
-            // <---- run your one time code here
-            //databaseSetup();
-
-            // mark first time has ran.
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("firstTime", true);
-            editor.commit();
+        myPreferenceRef = getPreferences(MODE_PRIVATE);
+        myPreferenceEditor = myPreferenceRef.edit();
+        if(myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.").equals("No preference found."))
+        {
+            new JsonTask(this).execute(JSON_URL);
         }
+        else
+        {
+
+        }
+
 
         //fetches json data from JSON_URL
         new JsonTask(this).execute(JSON_URL);
 
         calender=Calendar.getInstance();
-        simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
         Time=simpleDateFormat.format(calender.getTime());
 
         //Initialize adapter so that it isnt null and is connectet to the ArrayList Plants
         adapter = new RecyclerViewAdapter(this, Plants, new RecyclerViewAdapter.OnClickListener() {
-
-
             @Override
             public void onClick(Plant item) {
                 Toast.makeText(MainActivity.this, item.getID(), Toast.LENGTH_SHORT).show();
-                Log.d("BACON",Plants.get(1).toString());
+
+                Intent i = new Intent(MainActivity.this, MoreInformation.class);
+                i.putExtra("KEY_NAME", item);
+                startActivity(i);
+
+                Log.d("BACON",item.toString());
             }
         });
+
 
         //Sets the recyclerView with ID view so it is connectet to adapter
         RecyclerView view = findViewById(R.id.view);
