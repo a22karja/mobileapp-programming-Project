@@ -51,8 +51,11 @@ coded that handles button presses from activities other than main
     }
 ```
 
-Recycler view som visar berg på namn från sidan https://mobprog.webug.se/json-api?login=brom
+Recycler view som visar namn på plantor från sidan https://mobprog.webug.se/json-api?login=a22karja
 ![](home.jpg)
+
+Info sidan som visar mer information om plantan
+![](info.jpg)
 
 Fields from the json objekt and how they are used
 
