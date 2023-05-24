@@ -57,6 +57,9 @@ Recycler view som visar namn på plantor från sidan https://mobprog.webug.se/js
 Info sidan som visar mer information om plantan<br>
 ![](info.jpg)
 
+Video of app being installed and used
+![](video.mp4);
+
 Fields from the json objekt and how they are used
 
 ID = Just an ID<br>
