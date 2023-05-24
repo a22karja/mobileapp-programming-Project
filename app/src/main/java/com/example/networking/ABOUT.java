@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 public class ABOUT extends AppCompatActivity {
     private WebView myWebView;
 
+    //Fetch an ugly web page to talk about the app
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class ABOUT extends AppCompatActivity {
         finish();
     }
 
+    //Clear sharedpreferance so that the app fetches data from the webb instead
     public void clearShared(View v)
     {
         AlertDialog dialog = new AlertDialog.Builder(ABOUT.this)

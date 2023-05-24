@@ -1,49 +1,55 @@
 
 # Rapport
 
-I denna uppgift används Recycler view för att visa data från en JSON fil som finns på nätet.
-För recyclerview så finns 2 xml filer. activity_main.xml är till för att sätta in recyclerViewn
-item.xml är för att beskriva hur de olika objekten ska se ut i recycler viewn. Här sä är de endast en text view vardera.
+I denna uppgift används Recycler view för att visa information om plantor i min lägenhet. Main activity visar vilka plantor som behöver vattnas och har knappar för att kunna gå till about aktivity eller för att få mer information om plantorna. 
+informationen genom ett JSON object som hämtas från "https://mobprog.webug.se/json-api?login=a22karja". Appen sparar denna information genom sharedpreference så att den inte behöver hämta infomationen varje gång den ska köras.
 
-Sedan finns det 3 java filer som behövde redigeras i detta project.
-Den första är MainActivity.java detta är vart appen körs. Där hämtas json data från hem sidan https://mobprog.webug.se/json-api?login=brom.
-Sedan är det Mountain, detta är vad som beskriver objektet som RecyclerViewn håller i
-
-MainActivity oncreate: fetches the data from JSON_URL and connects adapter to recyclerView. onPostExecute: puts data into adapter
+coded that handles button presses from activities other than main
 ```
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle extras = getIntent().getExtras();
+        //Handle information from plant information page, here the data get updated incase someone presses that they waterd the plant
+        if(requestCode==1)
+        {
+            if(resultCode==RESULT_OK)
+            {
+                String plantID=data.getStringExtra("KEY_NAME2");
+                for (Plant p : Plants) {
+                    if (p.getID().equals(plantID)) {
+                        calender = Calendar.getInstance();
+                        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        Time = simpleDateFormat.format(calender.getTime());
+                        p.setCompany(Time);
 
-        //fetches json data from JSON_URL
-        new JsonTask(this).execute(JSON_URL);
-        //Initialize adapter so that it isnt null and is connectet to the ArrayList Mountains
-        adapter = new RecyclerViewAdapter(this, Mountains, new RecyclerViewAdapter.OnClickListener() {
-            @Override
-            public void onClick(Mountain item) {
-                Toast.makeText(MainActivity.this, item.getName(), Toast.LENGTH_SHORT).show();
+                        myPreferenceEditor.clear();
+                        Gson gson=new Gson();
+                        String Pson=gson.toJson(Plants);
+                        myPreferenceEditor.putString("MyAppPreferenceArray",Pson);
+                        myPreferenceEditor.apply();
+
+                        RecyclerView view = findViewById(R.id.view);
+                        view.setLayoutManager(new LinearLayoutManager(this));
+                        view.setAdapter(adapter);
+
+                        break;
+                    }
+                }
             }
-        });
-
-        //Sets the recyclerView with ID view so it is connectet to adapter
-        RecyclerView view = findViewById(R.id.view);
-        view.setLayoutManager(new LinearLayoutManager(this));
-        view.setAdapter(adapter);
-    }
-    
-        @Override
-    public void onPostExecute(String json) {
-
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<Mountain>>() {}.getType();
-        //Fetches the data in the string json so that it can be put into the ArrayList Mountains
-        Mountains=gson.fromJson(json, type);
-        Log.d("MainActivityB", Mountains.toString());
-        //Updates the adapter data
-        adapter.newData(Mountains);
-        adapter.notifyDataSetChanged();
+        }
+        //Clear data if the user pressed the red button in ABOUT activity
+        else if (requestCode==2) {
+            if(resultCode==RESULT_OK)
+            {
+                myPreferenceEditor.clear();
+                myPreferenceEditor.apply();
+                finish();
+                startActivity(getIntent());
+            }
+        }
     }
 ```
 
 Recycler view som visar berg på namn från sidan https://mobprog.webug.se/json-api?login=brom
-![](recyclerView.jpg)
+![](home.jpg)

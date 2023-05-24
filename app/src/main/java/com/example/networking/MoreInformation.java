@@ -33,6 +33,7 @@ public class MoreInformation extends AppCompatActivity {
         TextView MSG=findViewById(R.id.MSG);
 
         Bundle extras = getIntent().getExtras();
+        //Put in information of plant
         if (extras != null) {
             plant = (Plant) getIntent().getSerializableExtra("KEY_NAME");
 
@@ -61,13 +62,10 @@ public class MoreInformation extends AppCompatActivity {
             Location.setText("Location:\n"+plant.getLocation());
             Category.setText("Result:\n"+plant.getCategory());
             Cost.setText("Days Between water:\n"+String.valueOf(plant.getCost()));
-
-
-
-            //The key argument here must match that used in the other activity
         }
 
     }
+    //the plant was waterd
     public void goWaterBack(View v)
     {
         Intent i = new Intent(MoreInformation.this,MainActivity.class);
@@ -75,6 +73,7 @@ public class MoreInformation extends AppCompatActivity {
         setResult(RESULT_OK, i);
         finish();
     }
+    //the plant wasnt waterd
     public void goBack(View v)
     {
         Intent i = new Intent(MoreInformation.this,MainActivity.class);

@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
         myPreferenceRef = getPreferences(MODE_PRIVATE);
         myPreferenceEditor = myPreferenceRef.edit();
+        //Check where to get information from
         if(Plants.size()==0){
             if(myPreferenceRef.getString("MyAppPreferenceArray", "No preference found.").equals("No preference found."))
             {
@@ -99,16 +100,19 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         adapter.notifyDataSetChanged();
     }
 
+    //Go to about activity
     public void goAbout(View v)
     {
         Intent i = new Intent(MainActivity.this,ABOUT.class);
         startActivityForResult(i,2);
     }
 
+    //Handle information from child aktivitys
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Bundle extras = getIntent().getExtras();
+        //Handle information from plant information page, here the data get updated incase someone presses that they waterd the plant
         if(requestCode==1)
         {
             if(resultCode==RESULT_OK)
@@ -136,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
                 }
             }
         }
+        //Clear data if the user pressed the red button in ABOUT activity
         else if (requestCode==2) {
             if(resultCode==RESULT_OK)
             {
