@@ -56,9 +56,9 @@ Recycler view som visar berg på namn från sidan https://mobprog.webug.se/json-
 
 Fields from the json objekt and how they are used
 
-ID = Just an ID
-Name = Name of Plant
-Company = When it was waterd last
-Location = Where the plant is
-Category = What the plant gives
-Cost = How often in days it should be watered
+ID = Just an ID<br>
+Name = Name of Plant<br>
+Company = When it was waterd last<br>
+Location = Where the plant is<br>
+Category = What the plant gives<br>
+Cost = How often in days it should be watered<br>
